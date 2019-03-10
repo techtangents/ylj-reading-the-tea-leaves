@@ -2,3 +2,5 @@ HA
 HE
 elm-stuff/
 repl-temp-*
+/node_modules
+/.vscode

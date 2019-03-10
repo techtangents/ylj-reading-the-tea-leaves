@@ -97,7 +97,7 @@ if you are like me have vim bindings in permanent muscle memory. :)
 ### Elm Dependencies
 
 To make sure Elm is all happy and that it downloads all of the packages you need
-before the workshop. Jump into the /elm directory of this project and run `elm-reactor`.
+before the workshop. Jump into the /elm directory of this project and run `elm reactor`.
 
 In a browser, navigate to http://localhost:8000/test.html and wait for hello world to 
 appear. It needs to install a few dependencies to get there, so don't worry if it 
