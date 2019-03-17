@@ -15,35 +15,33 @@ The basic shape of this pattern is as follows:
 
 ## Elm 
 
-If you take a look at http://package.elm-lang.org/packages/elm-lang/html/1.1.0/Html-App#program 
+If you take a look at https://package.elm-lang.org/packages/elm/browser/latest/Browser#sandbox 
 you'll see the core of this idea in action:
 
 ```elm
-program
-    :  { init : (model, Cmd msg)
-       , update : msg -> model -> (model, Cmd msg)
-       , subscriptions : model -> Sub msg
-       , view : model -> Html msg 
-       }
-    -> Program Never 
+Browser.sandbox :
+    { init : model
+    , view : model -> Html msg
+    , update : msg -> model -> model
+    }
+    -> Program () model msg
 ```
 
 We can see clearly here what we were talking about with MVI:
 
+  - `init` is the initial value for our model and potentially a side effect to kick things off (like an XHR to load all of our data)
   - `view` takes a model and returns our virtual dom representation of the UI
   - `update` takes our message and returns the next state (and optionally a side effect (like an XHR))
-  - `init` is the initial value for our model and potentially a side effect to kick things off (like an XHR to load all of our data)
-  - `subscriptions` are things that we can setup to receive incoming events from the outside world (websockets, time, etc)
 
-The typeparameter `msg` for Cmd, Sub and Html means that our side effecting parts 
+The type parameter `msg` for Cmd, Sub and Html means that our side effecting parts 
 (UI events from HTML, Callback returns from Cmds and incoming messages from subscriptions)
 all have to agree on the same message type so that we know our update function can handle 
 all of the messages. 
 
 If you open up your editor in the elm directory and take a look at Main.elm,
-you can see this in action. You also want to run `elm-reactor` in that directory
+you can see this in action. You also want to run `elm reactor` in that directory
 (in VSCode, just run the `Elm: Reactor - Start` command) so 
-you can hit [the test page](http://localhost:8000/test.html)
+you can hit [the test page](http://localhost:8000/Main.elm)
 
 **_Exercise 1.elm.1_** : Modify the button so that it keeps a count of how many times it
 has been clicked and: 
@@ -57,14 +55,14 @@ Hints:
 - Add `clicks : Int` to the Model.
 - Update the update function to count the clicks
 - To update multiple fields with a record `{ x | fielda = newA, fieldB = newB }`
-- Modulo in Elm is `(%)` (e.g: `7 % 2` results in 1)
-- You can do multiple if then else branches like
+- Modulo in Elm is `modby` (from Basics) (e.g: `modBy 2 7` results in 1)
+- You can do multiple if then else branches like:
 ```elm
 if      x < 0 then "negative"
 else if x > 0 then "positive"
 else               "zero"
 ```
-- toString (from Prelude) will turn an Int into a String
+- String.fromInt will turn an Int into a String
 
 ## Halogen
 
@@ -118,7 +116,7 @@ Note, it's perfectly valid to have components that:
   - Never emit output (Output type: `Void`)
 
 Halogen is a purely functional library, so there is no actual mutation in a component 
-like there is in react. This is why we go to the added complexity of having the component dsl.
+like there is in react. This is why we go to the added complexity of having the component DSL.
 The component DSL is actually an algebra wrapped up in free so that we can keep our components
 as a purely functional declaration of a component whilst still getting the modular state that we 
 want from a component.
