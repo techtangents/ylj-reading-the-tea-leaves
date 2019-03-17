@@ -55,7 +55,7 @@ has been clicked and:
 Hints: 
 
 - Add `clicks : Int` to the Model.
-- Update the update functioon to count the clicks
+- Update the update function to count the clicks
 - To update multiple fields with a record `{ x | fielda = newA, fieldB = newB }`
 - Modulo in Elm is `(%)` (e.g: `7 % 2` results in 1)
 - You can do multiple if then else branches like
