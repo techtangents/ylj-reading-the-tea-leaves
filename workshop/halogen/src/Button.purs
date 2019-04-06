@@ -8,13 +8,13 @@ import Halogen.HTML.Events as HE
 import Halogen.HTML.Properties as HP
 
 -- State is our model for the UI
-type State = { on :: Boolean }
+type State = { count:: Int }
 
 -- Query reprents the actions that can happen in this component.
 -- The a is there so we can make queries that return values to 
 -- the parent component.
 data Query a
-  = Toggle a
+  = Increment a
   | Reset a
 
 -- Our component, with 
@@ -36,19 +36,25 @@ button =
   where
 
   initialState :: State
-  initialState = { on : false }
+  initialState = { count: 0 }
 
   -- We render our HTML view from our State type
   render :: State -> H.ComponentHTML Query
   render state =
     let
-      label = if state.on then "World" else "Hello"
+      c = state.count
+      m i = c `mod` i == 0
+      label | c == 0     = "0"
+            | m 3 && m 5 = "FizzBuzz"
+            | m 3        = "Fizz"
+            | m 5        = "Buzz"
+            | otherwise  = show c
     in
       HH.button
         [ HP.title label
         , HP.class_ (H.ClassName "big-button")
         -- This button raises the Toggle Query on click
-        , HE.onClick (HE.input_ Toggle)
+        , HE.onClick (HE.input_ Increment)
         ]
         [ HH.text label ]
 
@@ -57,10 +63,10 @@ button =
   eval :: Query ~> H.ComponentDSL State Query Void m
   eval = case _ of
     -- Do notation just allows us to sequence commands of ComponentDSL
-    Toggle next -> do
+    Increment next -> do
       -- H.modify takes a function from State -> State and updates our 
       -- component state with the new value
-      _ <- H.modify (\ s -> s { on = not s.on } )
+      _ <- H.modify (\ s -> s { count = s.count + 1 } )
       -- We have to return the continuation
       pure next
     Reset next -> do
