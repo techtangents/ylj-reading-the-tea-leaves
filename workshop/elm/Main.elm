@@ -7,47 +7,57 @@ import Html.Events as HE
 import Platform.Cmd exposing (Cmd)
 import Platform.Sub exposing (Sub)
 
--- This datatype describes the events that can happen in our UI.
-type Msg = Click | Reset
+type Msg = Check Int Bool
 
--- This is the model that drives the UI
-type alias Model = { clicks : Int }
+type alias Todo = 
+  { completed : Bool
+  , title     : String
+  , id        : Int
+  }
 
--- We initialise the model to our starting value
+type alias Model = 
+  { todos : List Todo }
+
 init : Model
-init  = { clicks = 0 }
+init = 
+  { 
+    todos = 
+      [ { completed = False , title = "Write Talk", id = 0 }
+      , { completed = True  , title = "Propose Talk", id = 1 }
+      ]
+  }
 
-text : Int -> String
-text i = 
-  let fizz = modBy 3 i == 0
-      buzz = modBy 5 i == 0
-  in
-    if      i == 0       then "0"
-    else if fizz && buzz then "FizzBuzz"
-    else if fizz         then "Fizz"
-    else if buzz         then "Buzz"
-    else                      String.fromInt i
+todoView : Todo -> H.Html Msg
+todoView t = 
+  H.li [] 
+  [ H.label []
+    [ H.input [ HA.type_ "checkbox", HA.class "toggle", HE.onCheck (Check t.id) ] []
+    , H.text "Todo this task!"
+    ]
+  ]
 
--- A function from model -> Html 
 view : Model -> H.Html Msg
 view model = 
-  let msg = text model.clicks
-  in H.main_ []
-    -- This button raises a toggle event that triggers an update
-    [H.button 
-      [HA.class "big-button", HE.onClick Click] 
-      [H.text msg] 
+  H.main_ [] 
+    [ H.section [ HA.class "todo" ]
+      [ H.ul [ HA.class "todo-list" ]
+        (List.map todoView model.todos)
+      ]
     ]
 
--- Our update takes in our Msg and returns a new model (and optional side effect)
+setTodoIf : Int -> Bool -> Todo -> Todo
+setTodoIf i b t =
+  if t.id == i 
+    then { t | completed = b }
+    else t
+
 update : Msg -> Model -> Model
 update msg model =
   case msg of
-    -- We pattern match our two cases for Msg and act accordingly
-    Click -> { model | clicks = model.clicks + 1 }
-    Reset -> init
+    (Check i b) -> { model | todos = List.map (setTodoIf i b) model.todos }
 
--- Wire everything together into our program.
+subscriptions : Model -> Sub Msg
+subscriptions model = Sub.none
 
 main =
   B.sandbox
