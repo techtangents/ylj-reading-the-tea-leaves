@@ -31,7 +31,7 @@ add1 (10 + 1)
 List.map add1 [1,2,3]
 -- => [2,3,4]
 -- You can make anonymous functions too. This is the same thing:
-List.map (\x = x + 1) [1,2,3]
+List.map (\x -> x + 1) [1,2,3]
 ```
 ### Data Types
 
