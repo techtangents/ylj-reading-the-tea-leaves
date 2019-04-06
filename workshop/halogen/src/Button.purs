@@ -60,9 +60,9 @@ button =
     Toggle next -> do
       -- H.modify takes a function from State -> State and updates our 
       -- component state with the new value
-      H.modify (\ s -> s { on = not s.on } )
+      _ <- H.modify (\ s -> s { on = not s.on } )
       -- We have to return the continuation
       pure next
     Reset next -> do
-      H.put initialState
+      _ <- H.put initialState
       pure next
