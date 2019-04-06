@@ -158,7 +158,7 @@ things.
 
 There are various combinators that create query algebra values with the right types and
 input that work for either case. You'll know when you need them because you'll likely get 
-stuck with a kinda of weird value to create for raising a message on a DOM event or querying
+stuck with a kind of weird value to create for raising a message on a DOM event or querying
 a child component.
 
   - For queries:
