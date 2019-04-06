@@ -21,6 +21,9 @@ There is already CSS included in the example, so we need to make some HTML from 
 **_Exercise 2.elm.1_** : Lets change our Main.elm to have the following skeleton:
 
 ```elm
+import Browser as B
+import Basics exposing (modBy)
+import String
 import Html as H
 import Html.Attributes as HA
 import Html.Events as HE
@@ -44,23 +47,21 @@ init = { todos =
   ]}
 
 view : Model -> H.Html Msg
-view model = H.body [] []
+view model = H.main_ [] []
 
-update : Msg -> Model -> ( Model, Cmd Msg )
+update : Msg -> Model -> Model
 update msg model =
   case msg of
-    Noop -> ( model, Cmd.none )
+    Noop -> model
 
 subscriptions : Model -> Sub Msg
 subscriptions model = Sub.none
 
-main : Program Never Model Msg
 main =
-  H.program
-    { init = (init, Cmd.none)
+  B.sandbox
+    { init = init
     , view = view
     , update = update
-    , subscriptions = subscriptions
     }
 ```
 
