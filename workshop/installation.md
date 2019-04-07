@@ -62,18 +62,15 @@ https://docs.npmjs.com/getting-started/fixing-npm-permissions
 Since we've got nodejs anyway for bower, the easiest way to get this running
 is via npm.
 
-`npm install -g elm`
+    npm install -g elm elm-live
 
 But if that doesn't work for some reason, there are prebuilt binaries and installers
-here:
-
-https://guide.elm-lang.org/install.html
+[here](https://guide.elm-lang.org/install.html).
 
 ### Bower, Purescript & Pulp
 
-_*If you already have purescript, be sure to have 0.11.4 installed otherwise 
-the code won't compile*_. If you get an error about not knowing about the
-RowCons type, you've got an older purescript 0.11.x version.
+_*If you already have purescript, be sure to have 0.12 installed otherwise 
+the code won't compile*_. 
 
 Note: If you have a distribution with a ncurses-6 (archlinux and fedora)
 then you will need to install a [ncurses-5 compat layer](https://aur.archlinux.org/packages/ncurses5-compat-libs/). 
@@ -85,10 +82,8 @@ We need bower for dependency management and pulp is a nice build tool that wraps
 ### Editor
 
 You can use whatever editor you want, but if you want something that works
-out of the box fairly well for Elm and Purescript, give Visual Studio code
-a go! 
-
-https://code.visualstudio.com/docs/setup/setup-overview 
+out of the box fairly well for Elm and Purescript, give 
+[Visual Studio Code](https://code.visualstudio.com/docs/setup/setup-overview) a go!  
 
 If you install "elm", "elm-format", "Purescript IDE" extensions you'll be in
 a good spot to get going. Installing "Vim" is a good way to not get mad as VSCode
@@ -97,7 +92,8 @@ if you are like me have vim bindings in permanent muscle memory. :)
 ### Elm Dependencies
 
 To make sure Elm is all happy and that it downloads all of the packages you need
-before the workshop. Jump into the /elm directory of this project and run `elm reactor`.
+before the workshop. Jump into the /elm directory of this project and run `make serve`
+or `elm-live Main.elm -- --output _compile/elm.js`.
 
 In a browser, navigate to http://localhost:8000/test.html and wait for hello world to 
 appear. It needs to install a few dependencies to get there, so don't worry if it 

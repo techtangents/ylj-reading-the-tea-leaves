@@ -103,13 +103,10 @@ foo x = add1 (Debug.log "X" x)
 
 #### Running
 
-The best way to run elm is via elm-reactor, as per the installation instructions.
+The best way to run elm is via `elm-live`, as per the installation instructions.
 
 That'll have a webserver running that will recompile when you refresh, show compilation
-errors, etc. It also has a time travelling debugger in it that you can inspect the 
-state of your app and the events flowing through it.
-
-In VsCode, you can run this by running the `Elm: Reactor Start` command (Cmd/Ctrl-Shift-P).
+errors, etc.
 
 ## Purescript 
 

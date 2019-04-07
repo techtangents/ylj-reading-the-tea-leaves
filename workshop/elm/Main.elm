@@ -1,4 +1,6 @@
 import Browser as B
+import Basics exposing (modBy)
+import String
 import Html as H
 import Html.Attributes as HA
 import Html.Events as HE
@@ -15,13 +17,13 @@ type alias Model = { on : Bool }
 init : Model
 init  = { on = True }
 
--- A function from model -> Html 
+-- A function from model -> Html
 view : Model -> H.Html Msg
 view model = 
   let msg = if model.on then "Hello" else "World"
   in H.main_ []
     -- This button raises a toggle event that triggers an update
-    [ H.button [ HA.class "big-button", HE.onClick Toggle ] 
+    [ H.button [ HA.class "big-button", HE.onClick Toggle ]
       [H.text msg] ]
 
 -- Our update takes in our Msg and returns a new model (and optional side effect)
@@ -32,11 +34,17 @@ update msg model =
     Toggle -> { model | on = not model.on }
     Reset -> init
 
--- Wire everything together into our program.
+subscriptions : Model -> Sub Msg
+subscriptions model = Sub.none
 
+-- Wire everything together into our program.
+main : Program () Model Msg
 main =
-  B.sandbox
-    { init = init
-    , view = view
-    , update = update
+  B.document
+    { init = \flags -> (init, Cmd.none)
+    , subscriptions = subscriptions
+    , view = \model -> { title = "Elm App"
+                       , body = [view model]
+                       }
+    , update = \msg model -> (update msg model, Cmd.none)
     }
