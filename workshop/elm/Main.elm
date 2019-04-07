@@ -29,10 +29,15 @@ init =
 
 todoView : Todo -> H.Html Msg
 todoView t = 
-  H.li [] 
+  H.li (if t.completed then [HA.class "completed"] else []) 
   [ H.label []
-    [ H.input [ HA.type_ "checkbox", HA.class "toggle", HE.onCheck (Check t.id) ] []
-    , H.text "Todo this task!"
+    [ H.input 
+      [ HA.type_ "checkbox"
+      , HA.class "toggle"
+      , HE.onCheck (Check t.id)
+      , HA.checked t.completed
+      ] []
+    , H.text t.title
     ]
   ]
 
@@ -59,9 +64,13 @@ update msg model =
 subscriptions : Model -> Sub Msg
 subscriptions model = Sub.none
 
-main =
-  B.sandbox
-    { init = init
-    , view = view
-    , update = update
+main : Program () Model Msg
+main = 
+  B.document
+    { init = \flags -> (init, Platform.Cmd.none)
+    , subscriptions = subscriptions
+    , view = \model -> { title = "Elm App"
+                       , body = [view model]
+                       }
+    , update = \msg model -> (update msg model, Platform.Cmd.none)
     }
