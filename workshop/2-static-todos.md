@@ -69,19 +69,19 @@ main =
 put the "completed" class on any completed todo.
 
 Hints: 
-  - You can find all of the HTML elements under the H namespace (e.g H.section), the attributes under HA (e.g. HA.class) and the events under HE (e.g HE.onClick)
+  - You can find all of the HTML elements under the H namespace (e.g `H.section`), the attributes under HA (e.g. `HA.class`) and the events under HE (e.g `HE.onCheck`)
   - Note that the elements take two list of things: the first list are the attributes and the second list are the children. 
   - Also note that it is `HA.type_` because type is a reserved word in Elm.
   - It will be very handy to write a function `todoView : Todo -> H.Html Msg` before doing the full view. 
   - Haskell people may be looking for `($)` at this point. It is `(<|)` in Elm.
-  - Use HA.classList to give a list of (String,Boolean) to optionally add classes 
+  - Use `HA.classList` to give a list of `(String, Boolean)` to optionally add classes. 
     to an element.
 
 **_Exercise 2.elm.3:_** Lets make the checkbox toggle the completed state of the todo.
 
 Hints:
 
-  - HE.onClick will do the job if you make an appropriate message. But what is that?
+  - `HE.onCheck` will do the job if you make an appropriate message. But what is that?
   - We'll need to add a `id : Int` to the todo and pass that into the action.
   - We'll need to implement handling this message in update. It's a O(n) operation,
     but it's fine just to update the list of todos with a :
@@ -141,17 +141,18 @@ making sure to put the "completed" class on the li if the todo is completed.
 
 Hints:
   - You probably also want a `renderTodo : Todo -> H.ComponentHTML Query` function.
-  - You can find all of the HTML elements under the HH namespace (e.g HH.section), the attributes under HP (e.g. HP.class) and the events under HE (e.g HE.onClick)
+  - You can find all of the HTML elements under the HH namespace (e.g `HH.section`), the attributes under HP (e.g. `HP.class`) and the events under HE (e.g `HE.onChecked`)
   - Note that the elements take two list of things: the first list are the attributes and the second list are the children. If you have no attributes, there is usually a `HH.section_ [children]` variant of the element. Note that some elements have no children (like input).
   - Classnames are not just strings `(H.ClassName "todo-list")` will get you a classname.
   - The type for checkbox is `HP.InputCheckbox`
-  - There is no classNames function like with Elm, sadly. Just use HP.classes and an if/then/else.
+  - There is no classNames function like with Elm, sadly. Just use `HP.classes` and an if/then/else.
 
 **_Exercise 2.purs.3:_** Follow the same process as with elm and make the checkbox toggle the 
 todo completed state.
 
 Hints:
 
-- Our Toggle event will need to take two parameters now `Toggle Int a` because we still need
+- Our `Query` type will need a new constructor, with the id and state. 
+  There we still need to be an `a` type parameter at the end for
   the continuation.
-- HE.input_ will turn (a -> Query) into the thing that HE.onClick needs by ignoring the click event and filling a with Unit.
+- HE.input will turn (a -> Query) into the thing that HE.onChecked needs.
