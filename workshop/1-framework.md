@@ -55,7 +55,7 @@ Hints:
 - Add `clicks : Int` to the Model.
 - Update the update function to count the clicks
 - To update multiple fields with a record `{ x | fielda = newA, fieldB = newB }`
-- Modulo in Elm is `modby` (from Basics) (e.g: `modBy 2 7` results in 1)
+- Modulo in Elm is `modBy` (from Basics) (e.g: `modBy 2 7` results in 1)
 - You can do multiple if then else branches like:
 ```elm
 if      x < 0 then "negative"
@@ -179,4 +179,5 @@ Hints:
 
   - Follow the same process as with elm.
   - Modulo in Purescript is `mod 7 2` (returns 1)
+    - Be careful as the argument order is different to Elm's `modBy`
   - show will turn the Int to a String
