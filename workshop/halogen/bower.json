@@ -14,7 +14,8 @@
     "purescript-newtype": "^3.0.0",
     "purescript-effect": "^2.0.0",
     "purescript-functors": "^3.0.0",
-    "purescript-now": "^4.0.0"
+    "purescript-now": "^4.0.0",
+    "purescript-profunctor-lenses": "^5.0.0"
   },
   "devDependencies": {
     "purescript-psci-support": "^4.0.0"
